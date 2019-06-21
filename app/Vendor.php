@@ -8,6 +8,7 @@ class Vendor extends Model
 {
     use Uuids;
 
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function recipes(){
         return $this->hasMany('App\Recipe');
