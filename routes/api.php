@@ -1,21 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+Route::POST('/login', 'AuthController@login')->name('login');
+Route::POST('/register', 'AuthController@register');
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::GET('/profile', 'ProfileController@getProfile');
+    Route::PUT('/profile', 'ProfileController@updateProfile');
 });
 
-Route::POST('/login', 'AuthController@login');
-Route::POST('/register', 'AuthController@register');

@@ -4,6 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +51,46 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json([
+                'status' => $exception->getStatusCode(),
+                'message' => $exception->getMessage(),
+                'data' => [],
+            ], $exception->getStatusCode());
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'status' => $exception->getStatusCode(),
+                'message' => $exception->getMessage(),
+                'data' => [],
+            ], $exception->getStatusCode());
+        }
+
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                'status' => $exception->getStatusCode(),
+                'message' => $exception->getMessage(),
+                'data' => [],
+            ], $exception->getStatusCode());
+        }
+
+        //check the type of the exception you are interested at
+        if ($exception instanceof HttpException) {
+            return response()->json([
+                'status' => $exception->getStatusCode(),
+                'message' => $exception->getMessage(),
+                'data' => [],
+            ], $exception->getStatusCode());
+        }
+
+        if ($exception instanceof UnauthorizedHttpException) {
+            return response()->json([
+                'status' => $exception->getStatusCode(),
+                'message' => $exception->getMessage(),
+                'data' => [],
+            ], $exception->getStatusCode());
+        }
         return parent::render($request, $exception);
     }
 }
