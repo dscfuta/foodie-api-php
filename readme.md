@@ -10,3 +10,5 @@ Setup:
 `php artisan migrate`
 
 `composer dump-autoload`
+
+`import foodie-api.sql in mysql`
